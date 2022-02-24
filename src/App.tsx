@@ -1,24 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import Display from './components/Display';
+import Button from './components/Button';
 import './App.css';
 
+
 function App() {
+  //calculator states
+  // const [value, setValue] = useState<number>(0);
+  const [calculate, setCalculate] = useState<string>('');
+
+  const handleCalculate = (char: string) => {
+    setCalculate(calculate + char);
+  }
+
+  const handleEqual = () => {
+    setCalculate((window as any).eval(calculate))
+  }
+
+  const handleClear = () => {
+    setCalculate('');
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1> Calculator </h1>
+      <main className="calculator">
+        <Display value={calculate}/>
+        <Button
+          handleCalculate={handleCalculate}
+          handleClear={handleClear}
+          handleEqual={handleEqual}
+        />
+      </main>
     </div>
   );
 }
